@@ -10,6 +10,18 @@ import Foundation
 //model observavel O SwiftUI se inscreve em seu objeto observável e atualiza todas as visualizações que precisam ser atualizadas quando os dados são alterados.
 final class ModelData: ObservableObject {
     @Published var landmarks: [Landmark] = load("landmarkData.json")
+    var hikes: [Hike] = load("hikeData.json")
+    
+    var features: [Landmark] {
+        landmarks.filter{ $0.isFeatured } //somente os que sao verdadeiros os features
+    }
+    
+    var categories: [String: [Landmark]] {
+        Dictionary(
+            grouping: landmarks,
+            by: {$0.category.rawValue}
+        )
+    }
 }
 
 // matriz com os dados do arquivo json
